@@ -1,0 +1,39 @@
+body, table
+{
+    font: 14pt Inconsolata, monospace;
+    background-color: #404840;
+    color: #DADEFA;
+    border-collapse: collapse;
+    overflow-y: scroll;
+}
+pre
+{
+    font: 14pt Inconsolata, monospace;
+    margin: 0;
+    unicode-bidi: bidi-override;
+}
+small
+{
+    font-size: 10pt;
+}
+a
+{
+    color: #BABECA;
+    text-decoration: none;
+    border-bottom: 1px dotted #606870;
+}
+a:hover
+{
+    border-bottom: 1px solid #BABECA;
+}
+hr
+{
+    margin: 1em 0 1em 0;
+    height: 1px;
+    border: 0;
+    background-color: #606870;
+}
+span
+{
+    color: #606870;
+}
