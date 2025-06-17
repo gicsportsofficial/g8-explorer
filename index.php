@@ -8,7 +8,7 @@ $z = (int)( $_COOKIE['z'] ?? 180 ); // TIMEZONE
 if( isset( $_SERVER['REQUEST_URI'] ) )
     $urio = substr( $_SERVER['REQUEST_URI'], strlen( W8IO_ROOT ) );
 else
-    $urio = 'tx/3xeUBGCstPJzeTEj2ts8XTTVbenfihWN5j69y7CTXhrF';
+    $urio = 'tx/74Y7BB3yhcyBMw52cFffHm75WY6roUhHtRcXLgiLWCwk';
 
 $uri = preg_filter( '/[^a-zA-Z0-9_.@\-\/]+/', '', $urio . chr( 0 ) );
 if( $uri === '' )
@@ -299,7 +299,7 @@ if( $address === 'top' && $f !== false )
             exit( header( 'location: ' . W8IO_ROOT . 'top/' . $f ) );
     }
 
-    $aid = $f === 'Waves' ? 0 : $RO->getIdByAsset( $f );
+    $aid = $f === 'Gic' ? 0 : $RO->getIdByAsset( $f );
     if( $aid !== false )
     {
         $info = $RO->getAssetInfoById( $aid );
@@ -365,7 +365,7 @@ function prolog()
     $title = 'w8 &#183; ' . prettyAddress( $address );
     if( $f !== false &&
         ( $address !== 'GENERATORS' || $f !== 1472 ) &&
-        ( is_numeric( $f ) || strlen( $f ) >= 32 || $f === 'Waves' ) )
+        ( is_numeric( $f ) || strlen( $f ) >= 32 || $f === 'Gic' ) )
         $title .= ' &#183; ' . prettyAddress( $f );
     echo sprintf( '
 <!DOCTYPE html>
@@ -596,13 +596,13 @@ function w8io_print_transactions( $aid, $where, $uid, $count, $address, $d, $sum
                     {
                         $sign = $amount < 0 ? -1 : 1;
                         $amount = ' ' . w8io_sign( $sign ) . w8io_amount( $amount, 8, 0, false );
-                        $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Waves">Waves</a>';
+                        $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Gic">Gic</a>';
                     }
                     else if( $asset === WAVES_LEASE_ASSET )
                     {
                         $sign = $amount < 0 ? -1 : 1;
                         $amount = ' ' . w8io_sign( $sign ) . w8io_amount( $amount, 8, 0, false );
-                        $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Waves">Waves (GENERATOR)</a>';
+                        $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Gic">Gic(GENERATOR)</a>';
                     }
                     else
                         continue;
@@ -720,7 +720,7 @@ function w8io_print_transactions( $aid, $where, $uid, $count, $address, $d, $sum
                 $sign = ( ( $type === TX_LEASE_CANCEL || $type === ITX_LEASE_CANCEL ) ? -1 : 1 ) * ( ( $amount < 0 ) ? -1 : 1 ) * ( $isb ? ( $isa ? 0 : 1 ) : -1 );
 
                 $amount = ' ' . w8io_sign( $sign ) . w8io_amount( $amount, 8, 0, false );
-                $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Waves">Waves</a>';
+                $asset = ' <a href="' . W8IO_ROOT . $address . '/f/Gic">Gic</a>';
                 $reclen = strlen( $amount ) + 5;
             }
         }
@@ -742,7 +742,7 @@ function w8io_print_transactions( $aid, $where, $uid, $count, $address, $d, $sum
             }
             else
             {
-                $fee = ' <small>' . w8io_amount( $fee, 8, 0 ) . ' <a href="' . W8IO_ROOT . $address . '/f/Waves">Waves</a></small>';
+                $fee = ' <small>' . w8io_amount( $fee, 8, 0 ) . ' <a href="' . W8IO_ROOT . $address . '/f/Gic">Gic</a></small>';
             }
         }
         else
@@ -1625,7 +1625,7 @@ else
         if( $f[0] === 'f' )
         {
             {
-                if( $arg === 'Waves' )
+                if( $arg === 'Gic' )
                     $arg = 0;
                 else
                 if( is_numeric( $arg ) )
@@ -1706,8 +1706,8 @@ else
                         $sep = strpos( $arg, ':' );
                         $asset1 = (int)substr( $arg, 1, $sep - 1 );
                         $asset2 = (int)substr( $arg, $sep + 1 );
-                        $asset1 = $asset1 === WAVES_ASSET ? 'WAVES' : $RO->getAssetById( $asset1 );
-                        $asset2 = $asset2 === WAVES_ASSET ? 'WAVES' : $RO->getAssetById( $asset2 );
+                        $asset1 = $asset1 === WAVES_ASSET ? 'GIC' : $RO->getAssetById( $asset1 );
+                        $asset2 = $asset2 === WAVES_ASSET ? 'GIC' : $RO->getAssetById( $asset2 );
                         $arg = ( $first === '>' ? '1_' : '2_' ) . $asset1 . '_' . $asset2;
                     }
                     else
@@ -1738,7 +1738,7 @@ else
                     if( !isset( $args[1] ) || !isset( $args[2] ) )
                         exit( 'not enough assets' );
 
-                    if( $args[1] === 'WAVES' )
+                    if( $args[1] === 'GIC' )
                     {
                         $asset1 = WAVES_ASSET;
                     }
@@ -1749,7 +1749,7 @@ else
                             exit( 'unknown asset1' );
                     }
 
-                    if( $args[2] === 'WAVES' )
+                    if( $args[2] === 'GIC' )
                     {
                         $asset2 = WAVES_ASSET;
                     }
@@ -1878,14 +1878,14 @@ else
 
         // WAVES
         {
-            $asset = "Waves";
+            $asset = "Gic";
             $amount = w8io_amount( $balance[0], 8 );
-            $furl = W8IO_ROOT . $address . '/f/Waves';
+            $furl = W8IO_ROOT . $address . '/f/Gic';
 
             if( $arg === 0 && $filter === 1 )
             {
-                echo '<b>' . $amount . ' <a href="' . W8IO_ROOT . 'top/Waves">' . $asset . '</a></b>';
-                echo ' <small><a href="' . W8IO_ROOT . $address . '/fi/Waves">i</a><a href="' . W8IO_ROOT . $address . '/fo/Waves">o</a></small>' . PHP_EOL;
+                echo '<b>' . $amount . ' <a href="' . W8IO_ROOT . 'top/Gic">' . $asset . '</a></b>';
+                echo ' <small><a href="' . W8IO_ROOT . $address . '/fi/Gic">i</a><a href="' . W8IO_ROOT . $address . '/fo/Gic">o</a></small>' . PHP_EOL;
                 echo '<span>' . str_repeat( '—', 39 ) . '&nbsp;</span>' .  PHP_EOL;
             }
             else
@@ -1901,7 +1901,7 @@ else
 
             if( $balance[0] !== $amount )
             {
-                $asset = "Waves (GENERATOR)";
+                $asset = "Gic(GENERATOR)";
                 $amount = w8io_amount( $amount, 8 );
 
                 $weights[WAVES_LEASE_ASSET] = 1000;
@@ -2041,7 +2041,7 @@ else
 
                 echo "pay ($from .. $to) ($percent %):" . PHP_EOL . PHP_EOL;
                 echo w8io_amount( $waves_blocks, 0 ) . ' Blocks' . PHP_EOL;
-                echo w8io_amount( $waves_fees, 8 ) . " Waves" . PHP_EOL;
+                echo w8io_amount( $waves_fees, 8 ) . " Gic" . PHP_EOL;
 
                 $payments = [];
                 foreach( $incomes as $a => $p )
@@ -2064,7 +2064,7 @@ else
                     if( $n === 0 )
                     {
                         $m++;
-                        echo "    Mass (Waves) #$m:" . PHP_EOL;
+                        echo "    Mass (Gic) #$m:" . PHP_EOL;
                         echo "    ------------------------------------------------------------" . PHP_EOL;
                     }
                     $address = $RO->getAddressById( $a );
@@ -2096,11 +2096,11 @@ if( !isset( $L ) )
 
 echo '</pre></td></tr></table>';
 echo '<hr><div width="100%" align="right"><pre><small>';
-echo "<a href=\"https://github.com/deemru/w8io\">github/deemru/w8io</a>";
+echo "<a href=\"https://github.com/gicsportsofficial/g8-explorer\">github/gicsportsofficial/g8-explorer</a>";
 if( file_exists( '.git/FETCH_HEAD' ) )
 {
     $rev = file_get_contents( '.git/FETCH_HEAD', false, null, 0, 40 );
-    echo "/<a href=\"https://github.com/deemru/w8io/commit/$rev\">" . substr( $rev, 0, 7 ) . '</a> ';
+    echo "/<a href=\"https://github.com/gicsportsofficial/g8-explorer/commit/$rev\">" . substr( $rev, 0, 7 ) . '</a> ';
 }
 if( !isset( $showtime ) )
 {
